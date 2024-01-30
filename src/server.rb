@@ -8,6 +8,8 @@ require_relative 'errors'
 
 Bundler.require(:default)
 
+set :bind, '0.0.0.0'
+
 URL_SHORTENER = UrlShortenerService.new
 
 post '/shorten' do

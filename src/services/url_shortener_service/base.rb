@@ -1,26 +1,8 @@
-require_relative '../api_error'
+require_relative './errors'
 
 class UrlShortenerService
   @@shorters = {}
   @@short_code_regex = /^[0-9a-zA-Z_]{4,}$/
-
-  module Errors
-    class ShortCodeNotRegistered < ApiError
-      def initialize
-        super(message: "The short code cannot be found in the system", status: 400)
-      end
-    end
-    class ShortCodeAlreadyTaken < ApiError
-      def initialize
-        super(message: "The short code is already taken", status: 409)
-      end
-    end
-    class ShortCodeFailedRegex < ApiError
-      def initialize
-        super(message: "The short code failed to match the required format", status: 422)
-      end
-    end
-  end
 
   def shorten(url:, short_code:)
     raise Errors::ShortCodeFailedRegex unless @@short_code_regex.match?(short_code)

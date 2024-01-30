@@ -32,6 +32,8 @@ class UrlShortenerService
       last_seen_date: nil,
       redirect_count: 0
     }
+
+    { short_code: }
   end
 
   def consume(short_code)
@@ -45,6 +47,11 @@ class UrlShortenerService
 
   def stats(short_code)
     raise Errors::ShortCodeNotRegistered unless @@shorters.dig(short_code).present?
-    @@shorters[short_code] ||= {}
+
+    {
+      start_date: @@shorters[short_code][:start_date],
+      last_seen_date: @@shorters[short_code][:last_seen_date],
+      redirect_count: @@shorters[short_code][:redirect_count]
+    }
   end
 end

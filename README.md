@@ -1,4 +1,6 @@
 # api-challenge
+The solution for this challenge is written in [ruby 3.3.0](https://www.ruby-lang.org/en/news/2023/12/25/ruby-3-3-0-released/), uses [sinatra](https://sinatrarb.com/) for http serving and [rspec](https://rspec.info/) for testing it.<br>
+Please enjoy!
 
 ## First Steps
 There are 2 ways of running/testing the server:

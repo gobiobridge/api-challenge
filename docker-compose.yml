@@ -8,3 +8,8 @@ services:
     ports:
       - "4567:4567"
 
+  test:
+    platform: linux/x86_64
+    build:
+      context: .
+    command: ["bundle", "exec", "rspec"]

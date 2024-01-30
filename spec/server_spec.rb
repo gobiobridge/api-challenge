@@ -1,5 +1,5 @@
 require 'rack/test'
-require_relative '../src/app'
+require_relative '../src/server'
 
 RSpec.describe 'Server' do
   include Rack::Test::Methods

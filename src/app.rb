@@ -12,7 +12,9 @@ post '/shorten' do
 
   params = JSON.parse request.body.read
 
-  raise "Please, provide the required params." unless params["url"].present? && params["short_code"].present?
+  if params.dig("url").blank? || params.dig("short_code").blank?
+    return halt 400, "Missing required params"
+  end
 
   result = url_shortener.shorten(url: params["url"], short_code: params["short_code"])
 
@@ -27,4 +29,12 @@ get '/:short_code' do
   headers['Location'] = result
 
   halt 304
+end
+
+get '/:short_code/stats' do
+  content_type :json
+
+  result = url_shortener.stats(params[:short_code])
+
+  result.to_json
 end

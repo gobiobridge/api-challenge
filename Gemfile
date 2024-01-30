@@ -5,3 +5,5 @@ gem 'sinatra'
 gem 'json'
 
 gem "rackup", "~> 2.1"
+
+gem "activesupport", "~> 7.1"

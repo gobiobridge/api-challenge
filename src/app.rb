@@ -8,7 +8,7 @@ require_relative 'errors'
 
 Bundler.require(:default)
 
-url_shortener = UrlShortenerService.new
+URL_SHORTENER = UrlShortenerService.new
 
 post '/shorten' do
   content_type :json
@@ -19,7 +19,7 @@ post '/shorten' do
 
   raise Errors::MissingRequiredParams if url.blank? || short_code.blank?
 
-  result = url_shortener.shorten(url:, short_code:)
+  result = URL_SHORTENER.shorten(url:, short_code:)
 
   halt 201, result.to_json
 rescue ApiError => e
@@ -29,7 +29,7 @@ end
 get '/:short_code' do
   content_type :json
 
-  result = url_shortener.consume(params[:short_code])
+  result = URL_SHORTENER.consume(params[:short_code])
 
   headers['Location'] = result
 
@@ -41,7 +41,7 @@ end
 get '/:short_code/stats' do
   content_type :json
 
-  result = url_shortener.stats(params[:short_code])
+  result = URL_SHORTENER.stats(params[:short_code])
 
   halt 200, result.to_json
 rescue ApiError => e

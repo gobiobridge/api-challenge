@@ -2,7 +2,7 @@ require 'bundler/setup'
 require 'active_support'
 require 'active_support/core_ext'
 require_relative 'services/url_shortener_service/base'
-require_relative './api_error'
+require_relative './handlers/api_error'
 
 Bundler.require(:default)
 

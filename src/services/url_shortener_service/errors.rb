@@ -1,4 +1,4 @@
-require_relative '../../api_error'
+require_relative '../../handlers/api_error'
 
 module Errors
   class ShortCodeNotRegistered < ApiError

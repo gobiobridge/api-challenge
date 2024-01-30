@@ -1,9 +1,9 @@
-# app.rb
 require 'bundler/setup'
 require 'active_support'
 require 'active_support/core_ext'
 require_relative 'services/url_shortener_service'
 require_relative './api_error'
+
 Bundler.require(:default)
 
 url_shortener = UrlShortenerService.new

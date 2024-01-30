@@ -35,9 +35,9 @@ RSpec.describe 'Server' do
   end
 
   context 'GET /:short_code' do
-    it 'returns 304 when valid short_code is provided' do
+    it 'returns 302 when valid short_code is provided' do
       get '/example'
-      expect(last_response.status).to eq(304)
+      expect(last_response.status).to eq(302)
       expect(last_response.headers['Location']).to eq('http://example.com')
     end
 

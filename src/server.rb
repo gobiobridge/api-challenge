@@ -35,7 +35,7 @@ get '/:short_code' do
 
   headers['Location'] = result
 
-  halt 304
+  halt 302
 rescue ApiError => e
   halt e.status, e.message
 end

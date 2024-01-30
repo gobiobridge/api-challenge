@@ -2,7 +2,9 @@ require 'bundler/setup'
 require 'active_support'
 require 'active_support/core_ext'
 require_relative 'services/url_shortener_service/base'
+require_relative 'services/body_parser/base'
 require_relative './handlers/api_error'
+require_relative 'errors'
 
 Bundler.require(:default)
 
@@ -11,13 +13,11 @@ url_shortener = UrlShortenerService.new
 post '/shorten' do
   content_type :json
 
-  params = JSON.parse request.body.read
+  params = BodyParserService.parse(request.body)
 
   url, short_code = params.dig("url"), params.dig("short_code")
 
-  if url.blank? || short_code.blank?
-    return halt 400, "Missing required params"
-  end
+  raise Errors::MissingRequiredParams if url.blank? || short_code.blank?
 
   result = url_shortener.shorten(url:, short_code:)
 

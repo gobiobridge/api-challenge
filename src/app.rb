@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'active_support'
 require 'active_support/core_ext'
 require_relative 'services/url_shortener_service'
+require_relative './api_error'
 Bundler.require(:default)
 
 url_shortener = UrlShortenerService.new
@@ -12,13 +13,17 @@ post '/shorten' do
 
   params = JSON.parse request.body.read
 
-  if params.dig("url").blank? || params.dig("short_code").blank?
+  url, short_code = params.dig("url"), params.dig("short_code")
+
+  if url.blank? || short_code.blank?
     return halt 400, "Missing required params"
   end
 
-  result = url_shortener.shorten(url: params["url"], short_code: params["short_code"])
+  result = url_shortener.shorten(url:, short_code:)
 
-  result.to_json
+  halt 201, result.to_json
+rescue ApiError => e
+  halt e.status, e.message
 end
 
 get '/:short_code' do
@@ -29,6 +34,8 @@ get '/:short_code' do
   headers['Location'] = result
 
   halt 304
+rescue ApiError => e
+  halt e.status, e.message
 end
 
 get '/:short_code/stats' do
@@ -36,5 +43,7 @@ get '/:short_code/stats' do
 
   result = url_shortener.stats(params[:short_code])
 
-  result.to_json
+  halt 200, result.to_json
+rescue ApiError => e
+  halt e.status, e.message
 end

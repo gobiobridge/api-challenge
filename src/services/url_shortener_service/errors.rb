@@ -3,7 +3,7 @@ require_relative '../../handlers/api_error'
 module Errors
   class ShortCodeNotRegistered < ApiError
     def initialize
-      super(message: "The short code cannot be found in the system", status: 400)
+      super(message: "The short code could not be found in the system", status: 404)
     end
   end
 
